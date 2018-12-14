@@ -1,22 +1,14 @@
 'use strict';
 
-// Import the interface to Tessel hardware
-// const tessel = require('tessel');
-const Eth = require('ethjs');
-const stringify = require('json-stringify-safe');
 const Web3 = require('web3');
 
 var web3 = new Web3(
-    new Web3.providers.HttpProvider('https://rinkeby.infura.io/')
+    new Web3.providers.HttpProvider('https://kovan.infura.io/v3/901a0582278d4dd880c5e35a7f233cc2')
 );
 
 console.log(web3)
 
-
-// Turn one of the LEDs on to start.
-// console.log(tessel)
-
-// console.log("ETHHH")
+console.log("ETHHH")
 
 //const eth = new Eth(new Eth.HttpProvider('https://kovan.infura.io/v3/901a0582278d4dd880c5e35a7f233cc2'));
 // endpoint: https://kovan.infura.io/v3/901a0582278d4dd880c5e35a7f233cc2
@@ -286,22 +278,25 @@ var ABI = [
 		"type": "event"
 	}
 ]
-// const token = eth.contract(tokenABI).at('0x257b195a3c5cd78a1238818ad9baa7ad9f24383a');
+var contract = new web3.eth.Contract(ABI, '0x257b195a3c5cd78a1238818ad9baa7ad9f24383a')
 
 
-var MyContract = web3.eth.contract(ABI);
-// initiate contract for an address
-var contract = MyContract.at('0x257b195a3c5cd78a1238818ad9baa7ad9f24383a');
 // call constant function
 console.log("************ TOKEN ")
 console.log(contract)
 
 exports.contract = contract
 
-console.log("************ contract method ")
-console.log(contract.getLength.call())
-console.log(contract.getNecesidadByID(0))
+console.log("************ contract method ************************")
+// function async
+// var x =  contract.methods.getLength.call()
+// console.log(x)
+// var y =  contract.methods.getNecesidadByID(0).call()
+// console.log(x)
+var getSolicitudByID = async function (numberID) {
+    console.log(numberID)
+    var result = await contract.methods.getNecesidadByID(numberID).call()
+    return { info: result['info'], owner: result['owner'], provider: result['provider'] }
+}
 
-// contract.getLength.call()
-
-// token.getLength().then((result)=>{console.log(result.data)}).catch(console.log)
+console.log(getSolicitudByID(0))
