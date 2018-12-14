@@ -1,2 +1,3 @@
 # raspberry
-IoT + Blockchain
+
+IOT + Blockchain integration. Exploring ethereum with raspberry
