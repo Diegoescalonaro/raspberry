@@ -1,0 +1,22 @@
+{
+  "name": "raspberry",
+  "version": "1.0.0",
+  "description": "IoT integration",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Diegoescalonaro/raspberry.git"
+  },
+  "author": "Diegoescalonaro",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Diegoescalonaro/raspberry/issues"
+  },
+  "homepage": "https://github.com/Diegoescalonaro/raspberry#readme",
+  "dependencies": {
+    "web3": "^1.0.0-beta.37"
+  }
+}
