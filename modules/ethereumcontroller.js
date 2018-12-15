@@ -2,6 +2,7 @@
 
 const Web3 = require('web3');
 const ABI = require('./ABI').ABI;
+const pass = require('../../../.ethereum/rinkeby/notimportant.txt')
 
 var web3 = new Web3(
     new Web3.providers.HttpProvider("http://localhost:8545")
@@ -47,7 +48,7 @@ function solicitar(info, price) {
         if (contract == undefined)
             resolve("You must instantiate the contract.")
         else {
-            web3.eth.personal.unlockAccount(web3.eth.defaultAccount, ~/.ethereum/rinkeby/notimportant.txt) //TODO:
+            web3.eth.personal.unlockAccount(web3.eth.defaultAccount, pass) //TODO:
             contract.methods.solicitar(info,price).send({ from: web3.eth.defaultAccount})
                 .then(res => {
                     // will be fired once the receipt its mined
