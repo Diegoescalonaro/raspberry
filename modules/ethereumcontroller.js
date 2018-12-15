@@ -47,7 +47,7 @@ function solicitar(info, price) {
         if (contract == undefined)
             resolve("You must instantiate the contract.")
         else {
-            //web3.eth.personal.unlockAccount("account","config.ethereum.defaultAccount_pass")
+            web3.eth.personal.unlockAccount(web3.eth.defaultAccount, ~/.ethereum/rinkeby/notimportant.txt) //TODO:
             contract.methods.solicitar(info,price).send({ from: web3.eth.defaultAccount})
                 .then(res => {
                     // will be fired once the receipt its mined
