@@ -6,7 +6,9 @@ const ABI = require('./ABI').ABI;
 var web3 = new Web3(
     new Web3.providers.HttpProvider("http://localhost:8545")
 );
-web3.eth.defaultAccount = web3.eth.accounts[0]
+
+web3.eth.getAccounts().then(result =>
+    web3.eth.defaultAccount = result[0])
 console.log("Default Account" +web3.eth.defaultAccount)
 
 exports.web3 = web3
