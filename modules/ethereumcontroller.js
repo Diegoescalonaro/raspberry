@@ -42,11 +42,11 @@ getSolicitudByID(0)
  */
 function solicitar(info) {
     var thePromise = new Promise((resolve, reject) => {
-        if (trContract == undefined)
+        if (contract == undefined)
             resolve("You must instantiate the contract.")
         else {
             //web3.eth.personal.unlockAccount("account","config.ethereum.defaultAccount_pass")
-            trContract.methods.solicitar(info).send({ from: web3.eth.defaultAccount})
+            contract.methods.solicitar(info).send({ from: web3.eth.defaultAccount})
                 .then(res => {
                     // will be fired once the receipt its mined
                     //logger.info(`Tx registered in Ethereum: ${res.transactionHash}`)
