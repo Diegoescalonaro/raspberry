@@ -41,7 +41,7 @@ getSolicitudByID(0)
  * @returns {Promise}
  */
 function solicitar(info) {
-    return thePromise = new Promise((resolve, reject) => {
+    var thePromise = new Promise((resolve, reject) => {
         if (trContract == undefined)
             resolve("You must instantiate the contract.")
         else {
@@ -58,6 +58,7 @@ function solicitar(info) {
                 })
         }
     })
+    return thePromise
 }
 exports.solicitar = solicitar
 
