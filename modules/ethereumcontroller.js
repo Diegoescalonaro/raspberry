@@ -11,7 +11,7 @@ var web3 = new Web3(
 
 web3.eth.getAccounts().then(result =>
     web3.eth.defaultAccount = result[0])
-console.log("Default Account" +web3.eth.defaultAccount)
+console.log("Default Account" + web3.eth.defaultAccount)
 
 exports.web3 = web3
 //const eth = new Eth(new Eth.HttpProvider('https://kovan.infura.io/v3/901a0582278d4dd880c5e35a7f233cc2'));
@@ -30,13 +30,10 @@ console.log("************ contract method ************************")
 var getSolicitudByID = async function (numberID) {
     console.log(numberID)
     var result = await contract.methods.getNecesidadByID(numberID).call()
-    console.log( { info: result['info'], owner: result['owner'], provider: result['provider'] })
+    console.log({ info: result['info'], owner: result['owner'], provider: result['provider'] })
 }
 
 getSolicitudByID(0)
-
-
-
 
 /**
  * @function solicitar
@@ -49,17 +46,23 @@ function solicitar(info, price) {
         if (contract == undefined)
             resolve("You must instantiate the contract.")
         else {
-            web3.eth.personal.unlockAccount(web3.eth.defaultAccount, pass) //TODO:
-            contract.methods.solicitar(info,price).send({ from: web3.eth.defaultAccount})
-                .then(res => {
-                    // will be fired once the receipt its mined
-                    //logger.info(`Tx registered in Ethereum: ${res.transactionHash}`)
-                    resolve(res.transactionHash)
-                })
-                .catch(error => {
-                    //logger.error(err.message)
-                    reject(error.message)
-                })
+            web3.eth.personal.unlockAccount(web3.eth.defaultAccount, pass).then(result => {
+                if (result == true) {
+                    contract.methods.solicitar(info, price).send({ from: web3.eth.defaultAccount })
+                        .then(res => {
+                            resolve(res.transactionHash)
+                        })
+                        .catch(error => {
+                            //logger.error(err.message)
+                            reject(error.message)
+                        })
+                } else {
+                    resolve("Bad authentication.")
+                }
+
+
+            })
+
         }
     })
     return thePromise
