@@ -7,6 +7,7 @@ var web3 = new Web3(
     new Web3.providers.HttpProvider("http://localhost:8545")
 );
 web3.eth.defaultAccount = web3.eth.accounts[0]
+console.log("Default Account" +web3.eth.defaultAccount)
 
 exports.web3 = web3
 //const eth = new Eth(new Eth.HttpProvider('https://kovan.infura.io/v3/901a0582278d4dd880c5e35a7f233cc2'));
@@ -30,4 +31,33 @@ var getSolicitudByID = async function (numberID) {
 
 getSolicitudByID(0)
 
-console.log(web3.eth.defaultAccount)
+
+
+
+/**
+ * @function solicitar
+ * @param 
+ * @description 
+ * @returns {Promise}
+ */
+function solicitar(info) {
+    return thePromise = new Promise((resolve, reject) => {
+        if (trContract == undefined)
+            resolve("You must instantiate the contract.")
+        else {
+            //web3.eth.personal.unlockAccount("account","config.ethereum.defaultAccount_pass")
+            trContract.methods.solicitar(info).send({ from: web3.eth.defaultAccount})
+                .then(res => {
+                    // will be fired once the receipt its mined
+                    //logger.info(`Tx registered in Ethereum: ${res.transactionHash}`)
+                    resolve(res.transactionHash)
+                })
+                .catch(error => {
+                    //logger.error(err.message)
+                    reject(error.message)
+                })
+        }
+    })
+}
+exports.solicitar = solicitar
+
