@@ -2,7 +2,8 @@
 
 const Web3 = require('web3');
 const ABI = require('./ABI').ABI;
-const pass = require('../../../.ethereum/rinkeby/notimportant.txt')
+const pass = require('/home/pi/.ethereum/rinkeby/notimportant.js').secret
+exports.pass = pass
 
 var web3 = new Web3(
     new Web3.providers.HttpProvider("http://localhost:8545")
