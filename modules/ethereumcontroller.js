@@ -89,3 +89,5 @@ exports.validar = function (numberID) {
     })
     return thePromise
 }
+
+exports.validar = validar

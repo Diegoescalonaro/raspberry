@@ -1,9 +1,12 @@
 /* Initial file */
 
+var ethController = require('./modules/ethereumcontroller')
+var stockController = require('./modules/stockcontroller')
 
-// Requires
+exports.ethController = ethController
+exports.stockController = stockController
 
-// Logic
+
 
 
 
