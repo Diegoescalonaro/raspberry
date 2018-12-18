@@ -47,7 +47,7 @@ function solicitar(info, price) {
         else {
             web3.eth.personal.unlockAccount(web3.eth.defaultAccount, secret).then(result => {
                 if (result == true) {
-                    contract.methods.solicitar(info, price).send({ from: web3.eth.defaultAccount, gas: 348560 })
+                    contract.methods.solicitar(info, price).send({ from: web3.eth.defaultAccount, gas: 548560 })
                         .then(res => {
                             resolve(res.transactionHash)
                         })
@@ -75,7 +75,7 @@ exports.validar = function (numberID) {
     let thePromise = new Promise((resolve, reject) => {
         web3.eth.personal.unlockAccount(web3.eth.defaultAccount, secret).then(result => {
             if (result) {
-                trContract.methods.validar(numberID).send({ from: web3.eth.defaultAccount, gas: 348560 })
+                trContract.methods.validar(numberID).send({ from: web3.eth.defaultAccount, gas: 548560 })
                     .then(res => {
                         resolve(res.transactionHash)
                     })
