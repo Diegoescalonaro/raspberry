@@ -1,10 +1,12 @@
 'use strict';
 
-const Web3 = require('web3');
-const ABI = require('./ABI').ABI;
+const config = require('../config')
+const Web3 = require('web3')
+const ABI = require('./ABI').ABI
 const secret = require('/home/pi/.ethereum/rinkeby/notimportant.js').secret
 
 var web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:8545"))
+
 web3.eth.getAccounts().then(result => {
     web3.eth.defaultAccount = result[0]
     console.log("Default Account in use:  " + web3.eth.defaultAccount)
@@ -12,9 +14,7 @@ web3.eth.getAccounts().then(result => {
 
 exports.web3 = web3
 
-// smart contract address (KOVAN): 0x257b195a3c5cd78a1238818ad9baa7ad9f24383a
-// smart contract addres (RINKEBY): 0x96d1374d24d90faeb11413365d28482a26c63791
-var contract = new web3.eth.Contract(ABI, '0x96d1374d24d90faeb11413365d28482a26c63791')
+var contract = new web3.eth.Contract(ABI, config.smartcontractaddress)
 exports.contract = contract
 console.log("Smart contract loaded: " + contract._address)
 
@@ -26,10 +26,9 @@ console.log("Smart contract loaded: " + contract._address)
  * @returns {Promise}
  */
 var getSolicitudByID = async function (numberID) {
-    console.log(numberID)
     var result = await contract.methods.getNecesidadByID(numberID).call()
-    console.log(({ info: result['info'], owner: result['owner'], provider: result['provider'] }))
-    return ({ info: result['info'], owner: result['owner'], provider: result['provider'] })
+    console.log(({ producto: result['producto'], owner: result['owner'], proveedor: result['proveedor'] }))
+    return ({ producto: result['producto'], owner: result['owner'], proveedor: result['proveedor'] })
 }
 exports.getSolicitudByID = getSolicitudByID
 
@@ -40,20 +39,16 @@ exports.getSolicitudByID = getSolicitudByID
  * @description 
  * @returns {Promise}
  */
-function solicitar(info, price) {
+function solicitar(producto, price) {
     var thePromise = new Promise((resolve, reject) => {
         if (contract == undefined)
             resolve("You must instantiate the contract.")
         else {
             web3.eth.personal.unlockAccount(web3.eth.defaultAccount, secret).then(result => {
                 if (result == true) {
-                    contract.methods.solicitar(info, price).send({ from: web3.eth.defaultAccount, gas: 548560 })
-                        .then(res => {
-                            resolve(res.transactionHash)
-                        })
-                        .catch(error => {
-                            reject(error.message)
-                        })
+                    contract.methods.solicitar(producto, price).send({ from: web3.eth.defaultAccount, gas: 548560 })
+                        .then(res => { resolve(res.transactionHash) })
+                        .catch(error => { reject(error.message) })
                 } else {
                     resolve("Authentication error")
                 }
