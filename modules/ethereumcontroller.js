@@ -6,17 +6,19 @@ const ABI = require('./ABI').ABI
 const secret = require('/home/pi/.ethereum/rinkeby/notimportant.js').secret
 
 var web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:8545"))
-
-web3.eth.getAccounts().then(result => {
-    web3.eth.defaultAccount = result[0]
-    console.log("Default Account in use:  " + web3.eth.defaultAccount)
-})
-
 exports.web3 = web3
 
 var contract = new web3.eth.Contract(ABI, config.smartcontractaddress)
 exports.contract = contract
-console.log("Smart contract loaded: " + contract._address)
+
+
+web3.eth.getAccounts().then(result => {
+    web3.eth.defaultAccount = result[0]
+    console.log("Default Account in use:  " + web3.eth.defaultAccount)
+    console.log("Smart contract loaded: " + contract._address)
+})
+
+
 
 
 /**
