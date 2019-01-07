@@ -1,6 +1,6 @@
 'use strict';
 
-const config = require('../config')
+const config = require('../config').config
 const Web3 = require('web3')
 const ABI = require('./ABI').ABI
 const secret = require('/home/pi/.ethereum/rinkeby/notimportant.js').secret
@@ -66,7 +66,7 @@ exports.solicitar = solicitar
  * @description 
  * @returns {Promise}
  */
-exports.validar = function (numberID) {
+function validar(numberID) {
     let thePromise = new Promise((resolve, reject) => {
         web3.eth.personal.unlockAccount(web3.eth.defaultAccount, secret).then(result => {
             if (result) {
