@@ -11,14 +11,11 @@ exports.web3 = web3
 var contract = new web3.eth.Contract(ABI, config.smartcontractaddress)
 exports.contract = contract
 
-
 web3.eth.getAccounts().then(result => {
     web3.eth.defaultAccount = result[0]
     console.log("Default Account in use:  " + web3.eth.defaultAccount)
     console.log("Smart contract loaded: " + contract._address)
 })
-
-
 
 
 /**
@@ -41,16 +38,23 @@ exports.getSolicitudByID = getSolicitudByID
  * @description 
  * @returns {Promise}
  */
-function solicitar(producto, price) {
+function solicitar(producto, precio) {
     var thePromise = new Promise((resolve, reject) => {
         if (contract == undefined)
             resolve("You must instantiate the contract.")
         else {
             web3.eth.personal.unlockAccount(web3.eth.defaultAccount, secret).then(result => {
                 if (result == true) {
-                    contract.methods.solicitar(producto, price).send({ from: web3.eth.defaultAccount, gas: 548560 })
-                        .then(res => { resolve(res.transactionHash) })
-                        .catch(error => { reject(error.message) })
+                    contract.methods.solicitar(producto, precio).send({ from: web3.eth.defaultAccount, gas: 548560 })
+                        .then(res => { 
+                            resolve(res.transactionHash) 
+                            console.log("Transacción validada: "+ res.transactionHash)
+                            console.log(res)
+                        })
+                        .catch(error => { 
+                            reject(error.message)
+                            console.log(error) 
+                        })
                 } else {
                     resolve("Authentication error")
                 }
@@ -75,9 +79,12 @@ function validar(numberID) {
                 trContract.methods.validar(numberID).send({ from: web3.eth.defaultAccount, gas: 548560 })
                     .then(res => {
                         resolve(res.transactionHash)
+                        console.log("Transacción validada: "+ res.transactionHash)
+                        console.log(res)
                     })
                     .catch(err => {
                         reject(err.message)
+                        console.log(error) 
                     })
             } else {
                 resolve("Authentication error")
