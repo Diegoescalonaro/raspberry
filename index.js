@@ -14,7 +14,7 @@ wpi.pinMode(7, wpi.INPUT);
 
 setInterval(function () {
 
-if(wpi.digitalRead(7) == 1) {
+if(wpi.digitalRead(7) == 0) {
     console.log("Nueva solicitud de producto desde Raspberry PI")
     ethController.solicitar("Probando solicitud desde boton", 1000000).then(console.log).catch(console.log)
 }
